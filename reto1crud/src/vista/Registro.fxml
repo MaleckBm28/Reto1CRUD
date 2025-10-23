@@ -95,7 +95,7 @@
          </font>
       </TextField>
       <ComboBox fx:id="cbGenero" editable="false" layoutX="287.0" layoutY="294.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="240.0" promptText="seleccionar genero" visibleRowCount="3" />
-      <Button contentDisplay="CENTER" layoutX="547.0" layoutY="375.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="103.0" style="-fx-background-color: #e91809;" text="SALIR" textAlignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="547.0" layoutY="375.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="103.0" text="SALIR" textAlignment="CENTER">
          <font>
             <Font name="Cambria" size="12.0" />
          </font>

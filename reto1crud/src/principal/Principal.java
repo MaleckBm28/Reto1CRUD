@@ -28,7 +28,7 @@ public class Principal extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/Registro.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Mi Ventana Principal");
+        stage.setTitle("Registro");
         stage.show();
     }
     

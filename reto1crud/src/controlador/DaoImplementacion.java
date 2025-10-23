@@ -29,6 +29,13 @@ public class DaoImplementacion extends Dao {
     
     /*Consultad*/
     
+    
+    
+    
+    
+    
+    //constructor
+    
     public DaoImplementacion() {
         this.configFile = ResourceBundle.getBundle("modelo.configClass");
         this.urlBD = this.configFile.getString("Conn");
@@ -63,6 +70,8 @@ public class DaoImplementacion extends Dao {
         }
 
     }
+    
+    //metodos
     
     
 
