@@ -1,78 +1,64 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
-import java.sql.CallableStatement;
+import conexion.ConexionBD;
+import modelo.Usuario;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
-/**
- *
- * @author 2dam
- */
-public class DaoImplementacion extends Dao {
+public class DaoImplementacion implements Dao {
 
-    private ResourceBundle configFile;
-    private String urlBD;
-    private String userBD;
-    private String passwordBD;
+    // ✅ Verifica login (correo + contraseña)
+    private static final String SQL_LOGIN =
+        "SELECT 1 FROM usuario WHERE correo=? AND contrasena=?";
 
-    private Connection con;
-    private PreparedStatement stmt;
-    private CallableStatement cs;
-    
-    /*Consultad*/
-    
-    
-    
-    
-    
-    
-    //constructor
-    
-    public DaoImplementacion() {
-        this.configFile = ResourceBundle.getBundle("modelo.configClass");
-        this.urlBD = this.configFile.getString("Conn");
-        this.userBD = this.configFile.getString("DBUser");
-        this.passwordBD = this.configFile.getString("DBPass");
-    }
+    // ✅ Obtiene todos los datos del usuario
+    private static final String SQL_FIND_BY_EMAIL =
+        "SELECT id_usuario, nombre, apellido, correo, contrasena, id_perfil " +
+        "FROM usuario WHERE correo=?";
 
-    private void openConnection() {
+    @Override
+    public boolean autenticar(String correo, String contrasena) {
+        try (Connection con = ConexionBD.open();
+             PreparedStatement ps = con.prepareStatement(SQL_LOGIN)) {
 
-        try {
-            con = DriverManager.getConnection(urlBD, this.userBD, this.passwordBD);
-//			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_americano?serverTimezone=Europe/Madrid&useSSL=false", "root",
-//				"abcd*1234");
+            ps.setString(1, correo);
+            ps.setString(2, contrasena);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // true si encontró un usuario
+            }
+
         } catch (SQLException e) {
-            System.out.println("Error al intentar abrir la BD");
+            System.out.println("⚠️ Error en autenticar(): " + e.getMessage());
+            return false;
         }
     }
 
-    private void closeConnection() throws SQLException {
+    @Override
+    public Usuario obtenerUsuarioPorEmail(String correo) {
+        try (Connection con = ConexionBD.open();
+             PreparedStatement ps = con.prepareStatement(SQL_FIND_BY_EMAIL)) {
 
-        if (stmt != null) {
-            stmt.close();
-        }
-        if (con != null) {
-            con.close();
-        }
-        if (cs != null) {
-            cs.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+            ps.setString(1, correo);
 
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setCodigoUsuario(String.valueOf(rs.getInt("id_usuario"))); // puedes mapearlo aquí
+                    u.setNombre(rs.getString("nombre"));
+                    u.setApellido(rs.getString("apellido"));
+                    u.setEmail(rs.getString("correo"));
+                    u.setContrasena(rs.getString("contrasena"));
+                    // Si quisieras más adelante, podrías buscar id_perfil → nombre_perfil con otra consulta
+                    return u;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("⚠️ Error en obtenerUsuarioPorEmail(): " + e.getMessage());
+        }
+        return null;
     }
-    
-    //metodos
-    
-    
-
 }

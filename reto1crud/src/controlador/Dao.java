@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
-/**
- *
- * @author 2dam
- */
-public class Dao {
-    
+import modelo.Usuario;
+
+public interface Dao {
+
+    boolean autenticar(String gmail, String contrasena);
+
+    Usuario obtenerUsuarioPorEmail(String gmail);
 }

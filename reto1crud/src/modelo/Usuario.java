@@ -14,10 +14,11 @@ public class Usuario extends Perfil {
     private String genero;
     private long nTarjeta;
 
-    public Usuario() {}
+    public Usuario() {
+    }
 
     public Usuario(String email, String contrasena, String codigoUsuario, String nombreUsuario,
-                   int telefono, String nombre, String apellido, String genero, long nTarjeta) {
+            int telefono, String nombre, String apellido, String genero, long nTarjeta) {
         super(email, contrasena, codigoUsuario, nombreUsuario, telefono, nombre, apellido);
         this.genero = genero;
         this.nTarjeta = nTarjeta;
@@ -44,6 +45,4 @@ public class Usuario extends Perfil {
         return "Usuario{" + "genero=" + genero + ", nTarjeta=" + nTarjeta + '}';
     }
 
-   
 }
-
