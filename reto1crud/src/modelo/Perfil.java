@@ -30,6 +30,7 @@ public abstract class Perfil {
         this.telefono = telefono;
         this.nombre = nombre;
         this.apellido = apellido;
+        
     }
 
     public String getEmail() {

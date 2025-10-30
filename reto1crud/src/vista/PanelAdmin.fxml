@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controlador.PanelAdminController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <Label fx:id="lblBienvenida"
+               text="Bienvenido al Panel de Administración"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    </center>
+</BorderPane>
