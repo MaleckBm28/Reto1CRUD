@@ -7,4 +7,6 @@ public interface Dao {
     boolean autenticar(String gmail, String contrasena);
 
     Usuario obtenerUsuarioPorEmail(String gmail);
+    
+     boolean actualizarUsuario(Usuario usuario);
 }

@@ -67,4 +67,35 @@ public class DaoImplementacion implements Dao {
         }
         return null;
     }
+    
+    @Override
+    public synchronized boolean actualizarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuario SET nombre=?, apellido=?, contrasena=?, id_perfil=?, genero=?, nTarjeta=? WHERE correo=?";
+
+        try (Connection con = ConexionBD.open();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getApellido());
+            ps.setString(3, usuario.getContrasena());
+            ps.setInt(4, usuario.getIdPerfil());
+            ps.setString(5, usuario.getGenero());
+            ps.setLong(6, usuario.getnTarjeta());
+            ps.setString(7, usuario.getEmail());
+
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("✅ Usuario modificado correctamente: " + usuario.getEmail());
+                return true;
+            } else {
+                System.out.println("⚠️ No se encontró el usuario con correo: " + usuario.getEmail());
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("⚠️ Error al modificar usuario: " + e.getMessage());
+            return false;
+        }
+    }
 }

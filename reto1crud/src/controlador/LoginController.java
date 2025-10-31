@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import manejoHilos.HiloLeer;
 import modelo.Usuario;
 
 public class LoginController {
@@ -14,7 +15,7 @@ public class LoginController {
     @FXML private PasswordField txtPassword;
     @FXML private Label lblMensaje;
 
-    private Dao dao = new DaoImplementacion();
+    private DaoImplementacion dao = new DaoImplementacion();
 
     @FXML
     private void handleLogin(ActionEvent event) {
@@ -26,15 +27,26 @@ public class LoginController {
             return;
         }
 
-        if (dao.autenticar(gmail, pass)) {
-            Usuario usuario = dao.obtenerUsuarioPorEmail(gmail);
+        // 👉 Aquí usamos tu hilo HiloLeer para manejar el login
+        HiloLeer hiloLogin = new HiloLeer(dao, gmail, pass);
+        Thread t = new Thread(hiloLogin, "Hilo-Login");
+
+        t.start();
+
+        try {
+            t.join(); // Espera a que el hilo termine
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        if (hiloLogin.isAutenticado()) {
+            Usuario usuario = hiloLogin.getUsuario();
             lblMensaje.setText("✅ Acceso correcto");
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/PanelAdmin.fxml"));
                 Scene scene = new Scene(loader.load());
 
-                // Pasar el usuario al PanelAdminController
                 PanelAdminController controller = loader.getController();
                 controller.setUsuario(usuario);
 

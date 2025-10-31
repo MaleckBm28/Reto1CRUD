@@ -44,12 +44,12 @@ public class PoolConexion {
     }
 
     // Devuelve una conexión del pool
-    public static Connection getConnection() throws SQLException {
+    public static synchronized Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
     // Cierra todo el pool (al salir del programa)
-    public static void cerrarPool() {
+    public static synchronized void cerrarPool() {
         try {
             if (dataSource != null) {
                 dataSource.close();
@@ -69,4 +69,9 @@ public class PoolConexion {
             Thread.currentThread().interrupt();
         }
     }
+    
+    
+    
+    /*Hacer un metodo sincronized para controlar los hilos
+    son 4 hilos, C R U D*/
 }
