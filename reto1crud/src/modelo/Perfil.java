@@ -18,11 +18,14 @@ public abstract class Perfil {
     private int telefono;
     private String nombre;
     private String apellido;
+    private int idPerfil;
 
-    public Perfil() {}
+    public Perfil() {
+    }
 
-    public Perfil(String email, String contrasena, String codigoUsuario, String nombreUsuario,
-                  int telefono, String nombre, String apellido) {
+    public Perfil(int idPerfil, String email, String contrasena, String codigoUsuario,
+            String nombreUsuario, int telefono, String nombre, String apellido) {
+        this.idPerfil = idPerfil;
         this.email = email;
         this.contrasena = contrasena;
         this.codigoUsuario = codigoUsuario;
@@ -30,7 +33,14 @@ public abstract class Perfil {
         this.telefono = telefono;
         this.nombre = nombre;
         this.apellido = apellido;
-        
+    }
+
+    public int getIdPerfil() {
+        return idPerfil;
+    }
+
+    public void setIdPerfil(int idPerfil) {
+        this.idPerfil = idPerfil;
     }
 
     public String getEmail() {
@@ -94,9 +104,4 @@ public abstract class Perfil {
         return "Perfil{" + "email=" + email + ", contrasena=" + contrasena + ", codigoUsuario=" + codigoUsuario + ", nombreUsuario=" + nombreUsuario + ", telefono=" + telefono + ", nombre=" + nombre + ", apellido=" + apellido + '}';
     }
 
-    
-    
-    
-    
 }
-
