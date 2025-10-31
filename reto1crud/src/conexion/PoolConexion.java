@@ -36,7 +36,7 @@ public class PoolConexion {
             // 🕒 Tiempo de retención (para pruebas)
             RETENCION_MS = Long.parseLong(config.getString("holdTimeSecond")) * 1000;
 
-            System.out.println("✅ Pool de conexiones inicializado correctamente.");
+            System.out.println("✅ Pool de conexiones inicializado correctamente. Tiempo de retención: " + (RETENCION_MS / 1000) + " segundos.");
 
         } catch (Exception e) {
             System.out.println("⚠️ Error al inicializar pool: " + e.getMessage());
@@ -64,14 +64,16 @@ public class PoolConexion {
     public static void retenerConexion(Connection con) {
         if (con == null) return;
         try {
+            System.out.println("⏳ Reteniendo conexión por " + (RETENCION_MS / 1000) + " segundos...");
             Thread.sleep(RETENCION_MS);
+            con.close();
+            System.out.println("✅ Conexión devuelta al pool.");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        } catch (SQLException e) {
+            System.out.println("⚠️ Error al cerrar conexión: " + e.getMessage());
         }
     }
-    
-    
-    
-    /*Hacer un metodo sincronized para controlar los hilos
-    son 4 hilos, C R U D*/
+
+    /* Método synchronized para controlar hilos CRUD (si se implementan) */
 }
