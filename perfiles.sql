@@ -1,4 +1,3 @@
-drop database gestionadt;
 CREATE DATABASE gestionadt;
 USE gestionadt;
 
@@ -13,24 +12,20 @@ CREATE TABLE perfil(
 );
 CREATE TABLE usuarios(
     codigo_usuario VARCHAR(30),
-    FOREIGN KEY (codigo_usuario) REFERENCES perfil(codigo_usuario),
+    FOREIGN KEY (codigo_usuario) REFERENCES perfil(codigo_usuario) ON DELETE CASCADE,
     genero VARCHAR(30) NOT NULL,
     n_tarjeta BIGINT NOT NULL
 );
 
 CREATE TABLE administrador(
     codigo_usuario VARCHAR(30),
-    FOREIGN KEY (codigo_usuario) REFERENCES perfil(codigo_usuario),
+    FOREIGN KEY (codigo_usuario) REFERENCES perfil(codigo_usuario) ON DELETE CASCADE,
     cuenta_corriente CHAR(24)
 );
 
 -- Administradores
 INSERT INTO perfil (codigo_usuario, email, contrasena, nombre_usuario, telefono, nombre, apellido) VALUES
-('A0001', 'maleck@example.com', 'pass123', 'maleck', 600111222, 'Maleck', 'Rodríguez'),
-('A0002', 'alex@example.com', 'pass123', 'alex', 600333444, 'Alex', 'García'),
-('A0003', 'sachin@example.com', 'pass123', 'sachin', 600777888, 'Sachin', 'Patel'),
-('A0004', 'jimena@example.com', 'pass123', 'jimena', 600555666, 'Jimena', 'López');
-
+('A0001', 'admin@example.com', '1234', 'admin', 600111222, 'Admin', '_1');
 -- Clientes
 INSERT INTO perfil (codigo_usuario, email, contrasena, nombre_usuario, telefono, nombre, apellido) VALUES
 ('C0001', 'carlos.mendez@example.com', 'userpass1', 'carlos', 600111111, 'Carlos', 'Méndez'),
@@ -46,9 +41,4 @@ INSERT INTO usuarios (codigo_usuario, genero, n_tarjeta) VALUES
 ('C0004', 'Femenino', 4444555566667777);
 
 INSERT INTO administrador (codigo_usuario, cuenta_corriente) VALUES
-('A0001', 'ES9121000418450200051332'),
-('A0002', 'ES7921000418450200051333'),
-('A0003', 'ES5621000418450200051334'),
-('A0004', 'ES6821000418450200051335');
-
-
+('A0001', 'ES9121000418450200051332');
