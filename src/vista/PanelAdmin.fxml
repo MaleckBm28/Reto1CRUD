@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controlador.PanelAdminController"
+      spacing="8" alignment="CENTER" style="-fx-padding: 20;">
+    
+    <Label text="Modificar Usuario" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="txtEmail" promptText="Correo del usuario"/>
+    <TextField fx:id="txtNombre" promptText="Nuevo nombre"/>
+    <TextField fx:id="txtApellido" promptText="Nuevo apellido"/>
+    <PasswordField fx:id="txtContrasena" promptText="Nueva contraseña"/>
+    <TextField fx:id="txtGenero" promptText="Género"/>
+    <TextField fx:id="txtTarjeta" promptText="Número de tarjeta"/>
+    <TextField fx:id="txtPerfil" promptText="ID Perfil (1=Admin, 2=Usuario, etc.)"/>
+
+    <Button fx:id="btnModificar" text="Modificar Usuario" onAction="#modificarUsuario"/>
+
+</VBox>

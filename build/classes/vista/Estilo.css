@@ -1,0 +1,95 @@
+
+
+.root, .anchor-pane {
+    -fx-background-color: linear-gradient(to bottom right, #fdfdfd, #f4f7fa);
+    -fx-border-color: #c0c0c0;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-family: "Cambria";
+    -fx-font-size: 16px;
+}
+
+/* Campos */
+.text-field, .password-field, .combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: "Cambria";
+    -fx-font-size: 14px;
+    -fx-padding: 5 10 5 10;
+}
+
+.text-field:hover, .password-field:hover, .combo-box:hover {
+    -fx-border-color: #007bff;
+}
+.text-field:focused, .password-field:focused, .combo-box:focused {
+    -fx-border-color: #007bff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,123,255,0.25), 8, 0, 0, 0);
+}
+
+/* Botones */
+.button {
+    -fx-font-family: "Cambria";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+/* Colores */
+.button[text="Modificar"] {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+}
+.button[text="Borrar"] {
+    -fx-background-color: linear-gradient(to bottom, #dc3545, #a71d2a);
+    -fx-text-fill: white;
+}
+.button[text="Salir"] {
+    -fx-background-color: linear-gradient(to bottom, #6c757d, #5a6268);
+    -fx-text-fill: white;
+}
+
+/* Botón ver contraseña */
+#btnVerContrasena {
+    -fx-background-color: transparent;
+    -fx-text-fill: #007bff;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+#btnVerContrasena:hover {
+    -fx-text-fill: #0056b3;
+    -fx-underline: true;
+}
+
+/* Popups */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+.dialog-pane .header-panel {
+    -fx-background-color: linear-gradient(to right, #007bff, #0056b3);
+}
+.dialog-pane .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.dialog-pane .button {
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+.dialog-pane .button:hover {
+    -fx-opacity: 0.8;
+}
