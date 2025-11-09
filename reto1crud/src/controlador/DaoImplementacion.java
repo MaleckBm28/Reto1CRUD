@@ -26,6 +26,17 @@ public class DaoImplementacion implements Dao {
         "FROM perfil p " +
         "JOIN administrador a ON p.codigo_usuario = a.codigo_usuario " +
         "WHERE p.email=?";
+    // 🟢 Consultas para registro de usuario
+private static final String SQL_ULTIMO_CODIGO =
+    "SELECT codigo_usuario FROM perfil WHERE codigo_usuario LIKE 'C%' ORDER BY codigo_usuario DESC LIMIT 1";
+
+private static final String SQL_INSERT_PERFIL =
+    "INSERT INTO perfil (codigo_usuario, email, contrasena, nombre_usuario, telefono, nombre, apellido) " +
+    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+private static final String SQL_INSERT_USUARIO =
+    "INSERT INTO usuarios (codigo_usuario, genero, n_tarjeta) VALUES (?, ?, ?)";
+
 
     @Override
     public boolean autenticar(String email, String contrasena) {
@@ -140,4 +151,83 @@ public class DaoImplementacion implements Dao {
             return false;
         }
     }
+    // 🟢 Método para registrar un nuevo usuario
+// 🟢 Método para registrar un nuevo usuario con validaciones
+public synchronized boolean registrarUsuario(Usuario usuario) {
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        con = ConexionBD.open();
+
+        // 1️⃣ Verificar si el correo ya existe
+        String sqlCheck = "SELECT email FROM perfil WHERE email = ?";
+        ps = con.prepareStatement(sqlCheck);
+        ps.setString(1, usuario.getEmail());
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            System.out.println("⚠️ Error: El correo " + usuario.getEmail() + " ya está registrado.");
+            return false; // correo duplicado
+        }
+
+        // 2️⃣ Obtener el último código de cliente (C000X)
+        String sqlUltimo = "SELECT codigo_usuario FROM perfil WHERE codigo_usuario LIKE 'C%' ORDER BY codigo_usuario DESC LIMIT 1";
+        ps = con.prepareStatement(sqlUltimo);
+        rs = ps.executeQuery();
+
+        String nuevoCodigo = "C0001"; // valor por defecto si no hay usuarios
+        if (rs.next()) {
+            String ultimoCodigo = rs.getString("codigo_usuario"); // ej: C0004
+            int num = Integer.parseInt(ultimoCodigo.substring(1)) + 1;
+            nuevoCodigo = String.format("C%04d", num);
+        }
+
+        usuario.setCodigoUsuario(nuevoCodigo);
+
+        // 3️⃣ Insertar en tabla perfil
+        String sqlInsertPerfil = "INSERT INTO perfil (codigo_usuario, email, contrasena, nombre_usuario, telefono, nombre, apellido) " +
+                                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        ps = con.prepareStatement(sqlInsertPerfil);
+        ps.setString(1, usuario.getCodigoUsuario());
+        ps.setString(2, usuario.getEmail());
+        ps.setString(3, usuario.getContrasena());
+        ps.setString(4, usuario.getNombreUsuario());
+        ps.setInt(5, usuario.getTelefono());
+        ps.setString(6, usuario.getNombre());
+        ps.setString(7, usuario.getApellido());
+        ps.executeUpdate();
+
+        // 4️⃣ Insertar en tabla usuarios
+        String sqlInsertUsuario = "INSERT INTO usuarios (codigo_usuario, genero, n_tarjeta) VALUES (?, ?, ?)";
+        ps = con.prepareStatement(sqlInsertUsuario);
+        ps.setString(1, usuario.getCodigoUsuario());
+        ps.setString(2, usuario.getGenero());
+        ps.setLong(3, usuario.getnTarjeta());
+        ps.executeUpdate();
+
+        PoolConexion.retenerConexion(con);
+        System.out.println("✅ Usuario registrado correctamente con código: " + nuevoCodigo);
+        return true;
+
+    } catch (SQLException e) {
+        if (e.getMessage().contains("Duplicate entry")) {
+            System.out.println("⚠️ Error: Ya existe un usuario con ese correo electrónico.");
+        } else {
+            System.out.println("⚠️ Error SQL al registrar usuario: " + e.getMessage());
+        }
+        return false;
+
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+        } catch (SQLException e) {
+            System.out.println("⚠️ Error al cerrar recursos: " + e.getMessage());
+        }
+    }
+}
+
+
 }

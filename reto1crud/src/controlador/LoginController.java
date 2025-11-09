@@ -38,14 +38,9 @@ public class LoginController {
             loadingStage.setScene(scene);
             loadingStage.setTitle("Conectando...");
             loadingStage.setResizable(false);
-
-            // 🚫 Quitar la X y los bordes
             loadingStage.initStyle(StageStyle.UNDECORATED);
-
-            // 🔒 Bloquear la ventana principal mientras carga
             loadingStage.initOwner(((Stage) txtCorreo.getScene().getWindow()));
             loadingStage.initModality(Modality.WINDOW_MODAL);
-
             loadingStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,25 +51,23 @@ public class LoginController {
         Thread t = new Thread(hiloLogin, "Hilo-Login");
         t.start();
 
-        // 🔸 Hilo auxiliar que espera el tiempo del pool (30s) y luego cierra el loading
+        // 🔸 Espera y cierre del loading
         new Thread(() -> {
             try {
-                t.join(); // espera a que termine el hilo de login
-                Thread.sleep(30000); // coincide con el retardo del pool
+                t.join();
+                Thread.sleep(30000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
 
             Platform.runLater(() -> {
-                loadingStage.close(); // cerrar el spinner
+                loadingStage.close();
 
-                // ❌ Fallo de autenticación
                 if (!hiloLogin.isAutenticado()) {
                     mostrarAlerta(Alert.AlertType.ERROR, "Credenciales incorrectas", "Gmail o contraseña incorrectos.");
                     return;
                 }
 
-                // ✅ Login correcto
                 Usuario usuario = hiloLogin.getUsuario();
                 if (usuario == null) {
                     mostrarAlerta(Alert.AlertType.ERROR, "Error de datos", "No se pudieron obtener los datos del usuario.");
@@ -83,7 +76,6 @@ public class LoginController {
 
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Bienvenido", "Acceso correcto, " + usuario.getNombre() + "!");
 
-                // 🧭 Determinar si es admin o usuario
                 try {
                     FXMLLoader loader;
                     String codigo = usuario.getCodigoUsuario().trim().toUpperCase();
@@ -94,18 +86,15 @@ public class LoginController {
                         loader = new FXMLLoader(getClass().getResource("/vista/PanelUsuario.fxml"));
                     }
 
-                    // Cargar escena
                     Scene scene = new Scene(loader.load());
-
-                    // Pasar usuario al panel
                     Object controller = loader.getController();
+
                     if (controller instanceof PanelAdminController) {
                         ((PanelAdminController) controller).setUsuario(usuario);
                     } else if (controller instanceof PanelUsuarioController) {
                         System.out.println("👤 Usuario cargado en PanelUsuario: " + usuario.getEmail());
                     }
 
-                    // Cambiar ventana
                     Stage stage = (Stage) txtCorreo.getScene().getWindow();
                     stage.setScene(scene);
                     stage.setTitle(codigo.startsWith("A") ? "Panel de Administración" : "Panel de Usuario");
@@ -118,12 +107,27 @@ public class LoginController {
         }).start();
     }
 
-    // 🔸 Método auxiliar para mostrar popups
+    // 🔸 Mostrar alertas
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
+    }
+
+    // 🟢 Nuevo método: abrir la pantalla de registro
+    @FXML
+    private void abrirRegistro(ActionEvent event) {
+        try {
+            Stage stage = (Stage) txtCorreo.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/Registro.fxml"));
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.setTitle("Registro de Usuario");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la pantalla de registro.");
+        }
     }
 }

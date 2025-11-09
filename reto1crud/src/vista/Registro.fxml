@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controlador.RegistroController"
+            prefWidth="460.0" prefHeight="560.0"
+            style="-fx-background-color: linear-gradient(to bottom, #f2f6ff, #d6e0f5);">
+
+    <children>
+        <VBox alignment="CENTER" spacing="10"
+              AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+              AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10;
+                     -fx-effect: dropshadow(gaussian, #a3a3a3, 8, 0.3, 0, 2);">
+
+            <Label text="Registro de Usuario"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+            <!-- Campos del perfil -->
+            <TextField fx:id="txtEmail" promptText="Correo electrónico"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+            <PasswordField fx:id="txtContrasena" promptText="Contraseña"
+                           style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+            <TextField fx:id="txtNombreUsuario" promptText="Nombre de usuario"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+            <TextField fx:id="txtTelefono" promptText="Teléfono"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+            <TextField fx:id="txtNombre" promptText="Nombre"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+            <TextField fx:id="txtApellido" promptText="Apellido"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+
+            <!-- ComboBox para género -->
+            <ComboBox fx:id="cbGenero" promptText="Seleccione su género"
+                      style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"
+                      prefWidth="200.0"/>
+
+            <TextField fx:id="txtTarjeta" promptText="Número de tarjeta"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0;"/>
+
+            <Button text="Registrar" onAction="#registrarUsuario" prefWidth="160"
+                    style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+
+            <Button text="Volver al Login" onAction="#volverAlLogin" prefWidth="160"
+                    style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-background-radius: 5;"/>
+
+        </VBox>
+    </children>
+</AnchorPane>
