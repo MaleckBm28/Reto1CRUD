@@ -1,71 +1,29 @@
 package controlador;
 
-<<<<<<< HEAD
-=======
 import javafx.application.Platform;
->>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-<<<<<<< HEAD
-import javafx.stage.Stage;
-=======
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import manejoHilos.HiloLeer;
->>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
 import modelo.Usuario;
 
 public class LoginController {
 
     @FXML private TextField txtCorreo;
     @FXML private PasswordField txtPassword;
-<<<<<<< HEAD
-    @FXML private Label lblMensaje;
-
-    private Dao dao = new DaoImplementacion();
-=======
 
     private DaoImplementacion dao = new DaoImplementacion();
->>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
 
     @FXML
     private void handleLogin(ActionEvent event) {
         String gmail = txtCorreo.getText().trim();
         String pass = txtPassword.getText().trim();
 
-<<<<<<< HEAD
-        if (gmail.isEmpty() || pass.isEmpty()) {
-            lblMensaje.setText("Por favor, rellene todos los campos.");
-            return;
-        }
-
-        if (dao.autenticar(gmail, pass)) {
-            Usuario usuario = dao.obtenerUsuarioPorEmail(gmail);
-            lblMensaje.setText("✅ Acceso correcto");
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/PanelAdmin.fxml"));
-                Scene scene = new Scene(loader.load());
-
-                // Pasar el usuario al PanelAdminController
-                PanelAdminController controller = loader.getController();
-                controller.setUsuario(usuario);
-
-                Stage stage = (Stage) txtCorreo.getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("Panel de Administración");
-            } catch (Exception e) {
-                lblMensaje.setText("⚠️ Error al abrir PanelAdmin: " + e.getMessage());
-                e.printStackTrace();
-            }
-
-        } else {
-            lblMensaje.setText("❌ Gmail o contraseña incorrectos");
-=======
         // 🟡 Validar campos vacíos
         if (gmail.isEmpty() || pass.isEmpty()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor, rellene todos los campos.");
@@ -97,7 +55,7 @@ public class LoginController {
         new Thread(() -> {
             try {
                 t.join();
-                Thread.sleep(30000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -170,7 +128,6 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la pantalla de registro.");
->>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
         }
     }
 }

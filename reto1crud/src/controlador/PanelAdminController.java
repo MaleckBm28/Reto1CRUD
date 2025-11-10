@@ -1,22 +1,11 @@
 package controlador;
 
-<<<<<<< HEAD
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-=======
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
->>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
 import modelo.Usuario;
 
 public class PanelAdminController {
 
-<<<<<<< HEAD
-    @FXML private Label lblBienvenida;
-
-    public void setUsuario(Usuario usuario) {
-        lblBienvenida.setText("Bienvenido, " + usuario.getNombre() + " " + usuario.getApellido());
-=======
     private Usuario usuario; // el usuario que vino del login
 
     /**
@@ -60,6 +49,5 @@ public class PanelAdminController {
     @FXML
     private void leerUsuarios(ActionEvent event) {
         System.out.println("📘 Leer usuarios (pendiente de implementación)");
->>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
     }
 }
