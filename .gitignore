@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 /reto1crud/nbproject/private/
 /reto1crud/build/
 /reto1crud/dist/
 /calcu/nbproject/private/
 /calcu/dist/
 /calcu/build/
+=======
+# Ignorar archivos y carpetas locales de NetBeans
+nbproject/private/
+build/
+dist/
+built-jar.properties
+>>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b

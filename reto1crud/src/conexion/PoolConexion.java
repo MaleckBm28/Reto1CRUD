@@ -36,7 +36,11 @@ public class PoolConexion {
             // 🕒 Tiempo de retención (para pruebas)
             RETENCION_MS = Long.parseLong(config.getString("holdTimeSecond")) * 1000;
 
+<<<<<<< HEAD
             System.out.println("✅ Pool de conexiones inicializado correctamente.");
+=======
+            System.out.println("✅ Pool de conexiones inicializado correctamente. Tiempo de retención: " + (RETENCION_MS / 1000) + " segundos.");
+>>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
 
         } catch (Exception e) {
             System.out.println("⚠️ Error al inicializar pool: " + e.getMessage());
@@ -44,12 +48,20 @@ public class PoolConexion {
     }
 
     // Devuelve una conexión del pool
+<<<<<<< HEAD
     public static Connection getConnection() throws SQLException {
+=======
+    public static synchronized Connection getConnection() throws SQLException {
+>>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
         return dataSource.getConnection();
     }
 
     // Cierra todo el pool (al salir del programa)
+<<<<<<< HEAD
     public static void cerrarPool() {
+=======
+    public static synchronized void cerrarPool() {
+>>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
         try {
             if (dataSource != null) {
                 dataSource.close();
@@ -64,9 +76,24 @@ public class PoolConexion {
     public static void retenerConexion(Connection con) {
         if (con == null) return;
         try {
+<<<<<<< HEAD
             Thread.sleep(RETENCION_MS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
+=======
+            System.out.println("⏳ Reteniendo conexión por " + (RETENCION_MS / 1000) + " segundos...");
+            Thread.sleep(RETENCION_MS);
+            con.close();
+            System.out.println("✅ Conexión devuelta al pool.");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (SQLException e) {
+            System.out.println("⚠️ Error al cerrar conexión: " + e.getMessage());
+        }
+    }
+
+    /* Método synchronized para controlar hilos CRUD (si se implementan) */
+>>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
 }

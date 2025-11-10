@@ -16,9 +16,9 @@ public class Administrador extends Perfil {
     public Administrador() {
     }
 
-    public Administrador(String email, String contrasena, String codigoUsuario, String nombreUsuario,
+    public Administrador(int idPerfil, String email, String contrasena, String codigoUsuario, String nombreUsuario,
             int telefono, String nombre, String apellido, String cuentaCorriente) {
-        super(email, contrasena, codigoUsuario, nombreUsuario, telefono, nombre, apellido);
+        super(idPerfil, email, contrasena, codigoUsuario, nombreUsuario, telefono, nombre, apellido);
         this.cuentaCorriente = cuentaCorriente;
     }
 

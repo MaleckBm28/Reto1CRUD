@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controlador.PanelUsuarioController"
+      alignment="CENTER" spacing="15" style="-fx-padding: 30;">
+    
+    <Label text="👋 Hola, Panel de Usuario" 
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <Label text="Bienvenido a tu área personal"
+           style="-fx-font-size: 14px;"/>
+
+    <Button text="Cerrar Sesión" prefWidth="150"/>
+
+</VBox>

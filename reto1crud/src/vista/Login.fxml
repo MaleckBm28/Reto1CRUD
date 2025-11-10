@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<<<<<<< HEAD
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="controlador.LoginController"
@@ -19,6 +20,42 @@
 
             <Button text="Entrar" onAction="#handleLogin" prefWidth="150"/>
             <Label fx:id="lblMensaje" textFill="red"/>
+=======
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controlador.LoginController"
+            prefWidth="420.0" prefHeight="400.0"
+            style="-fx-background-color: linear-gradient(to bottom, #f2f6ff, #d6e0f5);">
+
+    <children>
+        <VBox alignment="CENTER" spacing="15"
+              AnchorPane.topAnchor="30.0" AnchorPane.bottomAnchor="30.0"
+              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, #a3a3a3, 8, 0.3, 0, 2);">
+
+            <!-- 🔹 LOGIN -->
+            <Label text="Iniciar Sesión" textAlignment="CENTER"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+            <TextField fx:id="txtCorreo" promptText="Correo electrónico"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0; -fx-padding: 6 8;"/>
+
+            <PasswordField fx:id="txtPassword" promptText="Contraseña"
+                           style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #b0b0b0; -fx-padding: 6 8;"/>
+
+            <Button text="Entrar" onAction="#handleLogin" prefWidth="160"
+                    style="-fx-background-color: #4a90e2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+
+            <Label fx:id="lblMensaje" textFill="red" style="-fx-font-size: 12px;"/>
+
+            <Separator prefWidth="250"/>
+
+            <!-- 🔹 REGISTRO -->
+            <Label text="¿No tienes cuenta?" style="-fx-font-size: 13px; -fx-text-fill: #555;"/>
+            <Button text="Registrarse" onAction="#abrirRegistro" prefWidth="160"
+                    style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+>>>>>>> 1c47af27f8e65d46621e7fedaa60d700259cf29b
         </VBox>
     </children>
 </AnchorPane>
