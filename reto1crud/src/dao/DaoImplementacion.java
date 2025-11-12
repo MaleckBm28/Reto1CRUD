@@ -279,7 +279,35 @@ public class DaoImplementacion implements Dao {
         } catch (SQLException e) {
             System.out.println("⚠️ Error en obtenerTipoUsuario(): " + e.getMessage());
         }
-
         return "desconocido";
     }
+    // =====================================================
+// 🔹 VERIFICAR DUPLICADOS (teléfono y tarjeta)
+// =====================================================
+public boolean existeTelefono(int telefono) {
+    String sql = "SELECT telefono FROM perfil WHERE telefono = ?";
+    try (Connection con = ConexionBD.open();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, telefono);
+        ResultSet rs = ps.executeQuery();
+        return rs.next(); // true si ya existe
+    } catch (SQLException e) {
+        System.out.println("⚠️ Error en existeTelefono(): " + e.getMessage());
+        return false;
+    }
+}
+
+public boolean existeTarjeta(long tarjeta) {
+    String sql = "SELECT n_tarjeta FROM usuarios WHERE n_tarjeta = ?";
+    try (Connection con = ConexionBD.open();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setLong(1, tarjeta);
+        ResultSet rs = ps.executeQuery();
+        return rs.next(); // true si ya existe
+    } catch (SQLException e) {
+        System.out.println("⚠️ Error en existeTarjeta(): " + e.getMessage());
+        return false;
+    }
+}
+
 }
