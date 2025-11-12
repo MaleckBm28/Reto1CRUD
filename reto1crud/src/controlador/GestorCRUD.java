@@ -1,5 +1,6 @@
 package controlador;
 
+import dao.DaoImplementacion;
 import manejoHilos.*;
 
 /**

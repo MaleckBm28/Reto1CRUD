@@ -1,6 +1,6 @@
 package manejoHilos;
 
-import controlador.DaoImplementacion;
+import dao.DaoImplementacion;
 import modelo.Usuario;
 
 public class HiloModificar implements Runnable {

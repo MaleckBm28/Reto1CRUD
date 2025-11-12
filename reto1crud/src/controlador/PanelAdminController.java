@@ -1,53 +1,132 @@
 package controlador;
 
-import javafx.event.ActionEvent;
+import dao.DaoImplementacion;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import modelo.Usuario;
+
+import java.util.List;
 
 public class PanelAdminController {
 
-    private Usuario usuario; // el usuario que vino del login
+    @FXML private ComboBox<String> cbUsuarios;
+    @FXML private TextField txtNombre, txtApellido, txtEmail, txtNombreUsuario, txtTelefono, txtTarjeta;
+    @FXML private ComboBox<String> cbGenero;
+    @FXML private Label lblAdmin;
 
-    /**
-     * Método para recibir el usuario desde LoginController
-     */
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-        System.out.println("👤 Usuario cargado en PanelAdmin: " + usuario.getEmail());
+    private DaoImplementacion dao = new DaoImplementacion();
+    private Usuario usuarioSeleccionado;
+    private Usuario adminActual;
+
+    public void setAdmin(Usuario admin) {
+        this.adminActual = admin;
+        lblAdmin.setText("Administrador: " + admin.getNombreUsuario());
+        cargarCorreosUsuarios();
     }
 
-    /**
-     * Método vinculado al botón Modificar Usuario
-     * (corresponde al onAction="#modificarUsuario" del FXML)
-     */
     @FXML
-    private void modificarUsuario(ActionEvent event) {
-        if (usuario != null) {
-            System.out.println("🟠 Modificando usuario: " + usuario.getEmail());
+    public void initialize() {
+        cbGenero.getItems().addAll("Femenino", "Masculino");
+    }
 
-            // 🔹 Aquí podrías lanzar tu hilo HiloModificar:
-            // HiloModificar hilo = new HiloModificar(usuario);
-            // Thread t = new Thread(hilo, "Hilo-Modificar");
-            // t.start();
+    private void cargarCorreosUsuarios() {
+        List<String> correos = dao.obtenerTodosLosCorreos();
+        cbUsuarios.getItems().setAll(correos);
+    }
 
-        } else {
-            System.out.println("⚠️ No hay usuario cargado en el panel.");
+    @FXML
+    private void cargarDatosUsuario() {
+        String email = cbUsuarios.getValue();
+        if (email == null) return;
+
+        usuarioSeleccionado = dao.obtenerUsuarioPorEmail(email);
+        if (usuarioSeleccionado != null) {
+            txtNombre.setText(usuarioSeleccionado.getNombre());
+            txtApellido.setText(usuarioSeleccionado.getApellido());
+            txtEmail.setText(usuarioSeleccionado.getEmail());
+            txtNombreUsuario.setText(usuarioSeleccionado.getNombreUsuario());
+            txtTelefono.setText(String.valueOf(usuarioSeleccionado.getTelefono()));
+            cbGenero.setValue(usuarioSeleccionado.getGenero());
+            txtTarjeta.setText(String.valueOf(usuarioSeleccionado.getnTarjeta()));
         }
     }
 
-    // (Opcional) puedes ir preparando otros métodos del panel:
     @FXML
-    private void insertarUsuario(ActionEvent event) {
-        System.out.println("🟢 Insertar usuario (pendiente de implementación)");
+    private void guardarCambios() {
+        if (usuarioSeleccionado == null) return;
+
+        try {
+            usuarioSeleccionado.setNombre(txtNombre.getText());
+            usuarioSeleccionado.setApellido(txtApellido.getText());
+            usuarioSeleccionado.setEmail(txtEmail.getText());
+            usuarioSeleccionado.setNombreUsuario(txtNombreUsuario.getText());
+            usuarioSeleccionado.setTelefono(Integer.parseInt(txtTelefono.getText()));
+            usuarioSeleccionado.setGenero(cbGenero.getValue());
+            usuarioSeleccionado.setnTarjeta(Long.parseLong(txtTarjeta.getText()));
+
+            if (dao.actualizarUsuario(usuarioSeleccionado)) {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Actualizado", "Datos modificados correctamente.");
+                cargarCorreosUsuarios();
+            } else {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo actualizar el usuario.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Verifica los datos ingresados.");
+        }
     }
 
     @FXML
-    private void eliminarUsuario(ActionEvent event) {
-        System.out.println("🔴 Eliminar usuario (pendiente de implementación)");
+    private void eliminarUsuario() {
+        if (usuarioSeleccionado == null) return;
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar eliminación");
+        alert.setHeaderText("¿Eliminar usuario?");
+        alert.setContentText("Esta acción no se puede deshacer.");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                if (dao.eliminarUsuario(usuarioSeleccionado.getCodigoUsuario())) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Eliminado", "Usuario eliminado correctamente.");
+                    cbUsuarios.getItems().remove(usuarioSeleccionado.getEmail());
+                    limpiarCampos();
+                    usuarioSeleccionado = null;
+                }
+            }
+        });
     }
 
     @FXML
-    private void leerUsuarios(ActionEvent event) {
-        System.out.println("📘 Leer usuarios (pendiente de implementación)");
+    private void cerrarSesion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/Login.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) cbUsuarios.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Iniciar Sesión");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void limpiarCampos() {
+        txtNombre.clear();
+        txtApellido.clear();
+        txtEmail.clear();
+        txtNombreUsuario.clear();
+        txtTelefono.clear();
+        txtTarjeta.clear();
+        cbGenero.setValue(null);
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

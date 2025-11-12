@@ -1,3 +1,5 @@
-/reto1crud/nbproject/private/
-/reto1crud/build/
-/reto1crud/dist/
+# Ignorar archivos y carpetas locales de NetBeans
+nbproject/private/
+build/
+dist/
+built-jar.properties

@@ -1,5 +1,5 @@
 package manejoHilos;
-import controlador.DaoImplementacion;
+import dao.DaoImplementacion;
 
 public class HiloEliminar implements Runnable {
     private DaoImplementacion dao;

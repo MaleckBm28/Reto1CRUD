@@ -5,27 +5,22 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controlador.PanelAdminController"
-            prefWidth="480.0" prefHeight="700.0"
+            fx:controller="controlador.PanelUsuarioController"
+            prefWidth="460.0" prefHeight="620.0"
             style="-fx-background-color: linear-gradient(to bottom, #f2f6ff, #d6e0f5);">
 
     <children>
-        <VBox alignment="CENTER" spacing="12"
+        <VBox alignment="CENTER" spacing="10"
               AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
               AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0"
               style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 10;
                      -fx-effect: dropshadow(gaussian, #a3a3a3, 8, 0.3, 0, 2);">
+                     
+            <!-- Título -->
+            <Label text="Panel de Usuario"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-            <Label fx:id="lblAdmin"
-                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-
-            <Label text="Seleccione un usuario:"
-                   style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
-            <ComboBox fx:id="cbUsuarios" onAction="#cargarDatosUsuario"
-                      style="-fx-background-radius: 5; -fx-border-color: #b0b0b0;"/>
-
-            <Separator/>
-
+            <!-- Campos de texto -->
             <TextField fx:id="txtNombre" promptText="Nombre"
                        style="-fx-background-radius: 5; -fx-border-color: #b0b0b0;"/>
             <TextField fx:id="txtApellido" promptText="Apellido"
@@ -36,20 +31,26 @@
                        style="-fx-background-radius: 5; -fx-border-color: #b0b0b0;"/>
             <TextField fx:id="txtTelefono" promptText="Teléfono"
                        style="-fx-background-radius: 5; -fx-border-color: #b0b0b0;"/>
-            <ComboBox fx:id="cbGenero" promptText="Seleccione género"
+            <ComboBox fx:id="cbGenero" promptText="Seleccione su género"
                       style="-fx-background-radius: 5; -fx-border-color: #b0b0b0;"/>
             <TextField fx:id="txtTarjeta" promptText="Número de tarjeta"
                        style="-fx-background-radius: 5; -fx-border-color: #b0b0b0;"/>
 
-            <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
-                <Button text="Guardar Cambios" onAction="#guardarCambios"
-                        style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold;"/>
-                <Button text="Eliminar Usuario" onAction="#eliminarUsuario"
-                        style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            <!-- Botones -->
+            <HBox alignment="CENTER" spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <children>
+                    <Button text="Guardar Cambios" onAction="#guardarCambios"
+                            style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <Button text="Cerrar Sesión" onAction="#cerrarSesion"
+                            style="-fx-background-color: #cccccc; -fx-text-fill: black;"/>
+                </children>
             </HBox>
 
-            <Button text="Cerrar Sesión" onAction="#cerrarSesion"
-                    style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-weight: bold;"/>
+            <Button text="Eliminar Cuenta" onAction="#eliminarCuenta"
+                    style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </VBox>
     </children>
 </AnchorPane>

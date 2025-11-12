@@ -1,6 +1,6 @@
 package manejoHilos;
 
-import controlador.DaoImplementacion;
+import dao.DaoImplementacion;
 
 /**
  * 🟢 Hilo que simula la inserción de un usuario en la base de datos.
